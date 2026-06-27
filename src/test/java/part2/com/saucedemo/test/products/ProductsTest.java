@@ -9,7 +9,7 @@ public class ProductsTest extends BaseTest {
     @Test
     public void testProductsHeaderIsDisplayed(){
         ProductsPage productsPage =loginpage.logIntoApplication("standard_user","secret_sauce");
-        Assert.assertFalse(productsPage.isProductsHeaderDisplayed(),
+        Assert.assertTrue(productsPage.isProductsHeaderDisplayed(),
                 "\n Products Header Is Not Displayed \n");
     }
 
