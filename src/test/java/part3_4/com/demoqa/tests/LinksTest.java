@@ -4,10 +4,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import part3_4.com.demoqa.base.LinkPage;
 
 import java.io.IOException;
@@ -25,6 +22,9 @@ public class LinksTest {
         driver.get("https://demoqa.com/links");
         linkPage = new LinkPage(driver);
     }
+
+
+
     @Test
     public void testNewTab() throws  InterruptedException{
 
