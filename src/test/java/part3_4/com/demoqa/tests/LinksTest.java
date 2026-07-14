@@ -1,10 +1,12 @@
 package part3_4.com.demoqa.tests;
 
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import part3_4.com.demoqa.base.LinkPage;
 
@@ -25,27 +27,64 @@ public class LinksTest {
     }
     @Test
     public void testNewTab() throws  InterruptedException{
-        //org.openqa.selenium.JavascriptExecutor js = (org.openqa.selenium.JavascriptExecutor) driver;
-        //js.executeScript("window.scrollBy(0,300)");
-
-        Thread.sleep(500);
 
         String originalTab = driver.getWindowHandle();
-
         linkPage.clickHomeLink();
 
-        Thread.sleep(500);
-
-        Set<String> allTabs = driver.getWindowHandles();
-
-        for(String tab: allTabs){
+        for(String tab: driver.getWindowHandles()){
             if(!tab.equals(originalTab)){
                 driver.switchTo().window(tab);
             }
         }
 
-        String currentURL = driver.getCurrentUrl();
-        Assert.assertEquals(currentURL,"https://demoqa.com/","The new tab did not match");
+        Assert.assertEquals(driver.getCurrentUrl(),"https://demoqa.com/","The new tab did not match");
+        //close the tab
+        driver.close();
+        //switch back
+        driver.switchTo().window(originalTab);
+    }
+
+    @Test
+    public void testDynamiclinkOpenNewTab(){
+        String originalTab = driver.getWindowHandle();
+        linkPage.clickDynamicLink();
+        for(String tab:driver.getWindowHandles()){
+            if(!tab.equals(originalTab)){
+                driver.switchTo().window(tab);
+            }
+        }
+        // Close new tab
+        Assert.assertEquals(driver.getCurrentUrl(),"https://demoqa.com/");
+        driver.close();
+
+        // Return
+        driver.switchTo().window(originalTab);
+    }
+
+    @Test
+    public void testCreatedLinkResponse(){
+        linkPage.clickCreatedLink();
+        String response = linkPage.getLinkResponse();
+        Assert.assertTrue(response.contains("201"),"Expected 201 created response");
+    }
+
+    @BeforeMethod
+    public void openPage() {
+        driver.get("https://demoqa.com/links");
+    }
+
+    @Test
+    public void testNotFoundLinkresponse() throws TimeoutException, InterruptedException {
+        System.out.println(driver.getCurrentUrl());
+        System.out.println(driver.getTitle());
+        linkPage.clickNotFoundLink();
+
+        //Thread.sleep(500);
+        System.out.println(linkPage.getLinkResponse());
+
+        String response = linkPage.getLinkResponse();
+        System.out.println("Response"+response);
+        Assert.assertTrue(response.contains("404"),"Expected 404 not found response");
     }
 
     @AfterClass
