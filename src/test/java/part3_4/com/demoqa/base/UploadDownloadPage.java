@@ -11,6 +11,7 @@ public class UploadDownloadPage {
     private WebDriverWait wait;
 
     // 1. The Locators
+    private By downloadButton = By.id("downloadButton");
     private By uploadInput = By.id("uploadFile");
     private By uploadedFilePathText = By.id("uploadedFilePath");
 
@@ -28,5 +29,9 @@ public class UploadDownloadPage {
 
     public String getUploadedFilePath() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(uploadedFilePathText)).getText();
+    }
+
+    public void downloadFile(){
+        driver.findElement(downloadButton).click();
     }
 }
