@@ -62,7 +62,7 @@ public class AlertsTest {
         promptAlert.sendKeys("Hello");
         promptAlert.accept();
         String promptResult = alertsPage.getpromptResult();
-        Assert.assertTrue(promptResult.contains("Hello"),"Didnt trigerred the alert");
+        Assert.assertTrue(promptResult.contains("Hello"),"The result doesn't contain the Hello");
 
     }
 
