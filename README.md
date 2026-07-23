@@ -34,7 +34,7 @@ This framework is built using the **Page Object Model (POM)** design pattern to 
 
 1. **Clone the repository:**
    ```bash
-   git clone <your-repository-url>
+   git clone https://github.com/Bhomaramsuthar/selenium-practice
 
     ```
 
